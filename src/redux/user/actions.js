@@ -1,15 +1,9 @@
-// import { ADD_COIN, REMOVE_COIN } from "./types"
+import { Account } from "@solana/web3.js"
+import { CONNECT } from "./types"
 
-// export const addCoin = (coin) => {
-//   return {
-//     type: ADD_COIN,
-//     payload: coin
-//   }
-// }
-
-// export const removeCoin = (coin) => {
-//   return {
-//     type: REMOVE_COIN,
-//     payload: coin
-//   }
-// }
+export const connect = () => {
+  let account = new Account()
+  return {
+    type: CONNECT
+  }
+}

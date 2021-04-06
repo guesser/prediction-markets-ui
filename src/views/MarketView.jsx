@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { fetchMarketById } from '../redux/markets/middlewares'
 import Select from 'react-select'
-import { theme, customStyle} from './../theme/select.theme'
+import { theme, customStyle} from '../theme/select.theme'
 import { Account, Connection, PublicKey } from '@solana/web3.js';
 import { Market } from '@project-serum/serum';
 

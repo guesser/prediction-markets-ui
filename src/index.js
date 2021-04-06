@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { ConnectionProvider } from './utils/connection.helper';
+import { WalletProvider } from './utils/wallet.utils';
+import App from './App.tsx';
 import reportWebVitals from './reportWebVitals';
 import store from './redux'
 import { Provider } from 'react-redux'
@@ -9,7 +11,11 @@ import { Provider } from 'react-redux'
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ConnectionProvider>
+        <WalletProvider>
+          <App />
+        </WalletProvider>
+      </ConnectionProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,5 +1,5 @@
 import { ThemeProvider } from "../themeContext"
-import Navbar from './Navbar.jsx'
+import Navbar from './Navbar'
 import MarketListView from '../views/MarketListView'
 import MarketView from '../views/MarketView'
 import {
@@ -11,7 +11,7 @@ import NotFound from "../views/404"
 
 const Layout = () => {
   return (
-    <ThemeProvider>
+    <ThemeProvider initialTheme="light">
       <Router>
         <div className="min-h-screen flex flex-col">
           <Navbar />
