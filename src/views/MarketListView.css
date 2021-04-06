@@ -1,0 +1,24 @@
+@keyframes fadeIn {
+  0% {
+    @apply opacity-0;
+  }
+  100% {
+    @apply opacity-100;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    @apply opacity-0;
+  }
+  100% {
+    @apply opacity-100;
+  }
+}
+
+.item-fadeIn {
+   animation: fadeIn .2s linear forwards;
+}
+.item-fadeOut {
+  animation: fadeIn .2s linear forwards;
+}
