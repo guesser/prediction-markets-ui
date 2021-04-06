@@ -10,7 +10,8 @@ import { notify } from './notifications.helper';
 import { useConnectionConfig } from './connection.helper';
 import { useLocalStorageState } from './utils';
 import { WalletContextValues } from './../types/wallet.types';
-import { Button, Modal } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import {
   WalletAdapter,
   MathWalletAdapter,
@@ -149,7 +150,8 @@ export function WalletProvider({ children }) {
     >
       {children}
       <div onClick={close} className={`flex justify-center items-center absolute top-0 left-0 w-full h-full bg-opposite bg-opacity-80 ${isModalVisible || 'hidden'}`}>
-        <div className="p-5 bg-depth-1 dark:bg-default shadow-xl rounded-xl max-w-sm w-full">
+        <div className="relative py-6 px-5 bg-depth-1 dark:bg-default shadow-xl rounded-xl max-w-sm w-full">
+          <div className="absolute top-2 right-3"><FontAwesomeIcon className="cursor-pointer text-md" icon={faTimes} /></div>
           <h2 className="mb-5">Choose a Provider</h2>
           {
           WALLET_PROVIDERS.map((provider) => {
@@ -177,46 +179,6 @@ export function WalletProvider({ children }) {
         })}
         </div>
       </div>
-      {/* <Modal
-        title="Select Wallet"
-        okText="Connect"
-        visible={isModalVisible}
-        okButtonProps={{ style: { display: 'none' } }}
-        onCancel={close}
-        width={400}
-      >
-        {WALLET_PROVIDERS.map((provider) => {
-          const onClick = function () {
-            setProviderUrl(provider.url);
-            setAutoConnect(true);
-            close();
-          };
-          console.log('Im here')
-          return (
-            <div
-              key={provider.name}
-              onClick={onClick}
-              // icon={
-              //   <img
-              //     alt={`${provider.name}`}
-              //     width={20}
-              //     height={20}
-              //     src={provider.icon}
-              //     style={{ marginRight: 8 }}
-              //   />
-              // }
-              style={{
-                display: 'block',
-                width: '100%',
-                textAlign: 'left',
-                marginBottom: 8,
-              }}
-            >
-              {provider.name}
-            </div>
-          );
-        })}
-      </Modal> */}
     </WalletContext.Provider>
   );
 }

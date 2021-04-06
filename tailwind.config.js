@@ -231,6 +231,7 @@ module.exports = {
     },
   },
   variants: {
+    opacity: ['disabled'],
     backgroundColor: ['responsive', 'hover', 'focus', 'active'],
     backgroundOpacity: ['dark'],
     borderColor: ['responsive', 'hover', 'focus', 'active', 'last'],
@@ -242,6 +243,7 @@ module.exports = {
     textAlign: ['first', 'last', 'even', 'odd', 'responsive'],
     borderWidth: ['last', 'focus'],
     scale: ['hover'],
+    cursor: ['disabled']
   },
   purge: {
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css

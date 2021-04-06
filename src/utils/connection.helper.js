@@ -6,6 +6,11 @@ import tuple from 'immutable-tuple';
 
 export const ENDPOINTS = [
   {
+    name: 'devnet',
+    endpoint: 'devnet.solana.com',
+    custom: false,
+  },
+  {
     name: 'mainnet-beta',
     endpoint: 'https://solana-api.projectserum.com',
     custom: false,

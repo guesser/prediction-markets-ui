@@ -1,4 +1,6 @@
 
+import { faPlug } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useWallet } from '../utils/wallet.utils';
 
 export default function WalletConnect() {
@@ -7,8 +9,12 @@ export default function WalletConnect() {
 
 
   return (
+    <div>
+      {connected && wallet?.publicKey.toString()}
     <button className="px-2 py-1 border border-primary rounded text-primary hover:border-opposite hover:text-default" onClick={connected ? disconnect : connect}>
       {connected ? 'Disconnect' : 'Connect'}
+      <FontAwesomeIcon className="ml-2" icon={faPlug} />
     </button>
+    </div>
   );
 }

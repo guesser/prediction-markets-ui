@@ -1,4 +1,4 @@
-import { ADD_MARKETS, ADD_MARKET, ADD_FILTERS } from "./types"
+import { ADD_MARKETS_AND_FILTERS, ADD_MARKET } from "./types"
 
 const initialState = {
   markets: [],
@@ -7,10 +7,11 @@ const initialState = {
 
 export default function reducer(state = initialState, action){
   switch (action.type){
-  case ADD_MARKETS:
+  case ADD_MARKETS_AND_FILTERS:
     return {
       ...state,
-      markets: action.payload
+      markets: action.payload.markets,
+      filters: action.payload.filters
     }
   case ADD_MARKET:
     return {
@@ -19,11 +20,6 @@ export default function reducer(state = initialState, action){
         ...state.markets.filter(m => m.id !== action.payload.id),
         action.payload
       ] : state.markets
-    }
-  case ADD_FILTERS:
-    return {
-      ...state,
-      filters: action.payload
     }
   default:
     return state;

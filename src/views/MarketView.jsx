@@ -6,8 +6,8 @@ import { useParams } from 'react-router'
 import { fetchMarketById } from '../redux/markets/middlewares'
 import Select from 'react-select'
 import { theme, customStyle} from '../theme/select.theme'
-import { Account, Connection, PublicKey } from '@solana/web3.js';
-import { Market } from '@project-serum/serum';
+import { useWallet } from '../utils/wallet.utils';
+import { useHistory } from "react-router-dom";
 
 
 const MarketView = () => {
@@ -15,25 +15,13 @@ const MarketView = () => {
   const [from, setFrom] = useState(null)
   const [to, setTo] = useState(null)
   const { id } = useParams()
+  const { connected } = useWallet();
+  const history = useHistory();
 
-  const serum = async () => {
-    let connection = new Connection('https://api.mainnet-beta.solana.com');
-    let marketAddress = new PublicKey('HWHvQhFmJB3NUcu1aihKmrKegfVxBEHzwVX6yZCKEsi1');
-    let programId = new PublicKey('9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin'); // Serum program v3
-    let market = await Market.load(connection, marketAddress, {}, programId)
-    let bids = await market.loadBids(connection);
-    let asks = await market.loadAsks(connection);
-    console.log('asks', asks)
-    console.log('bids', bids)
-    for (let [price, size] of bids.getL2(20)) {
-      console.log(price, size);
-    }
-  }
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchMarketById(id)).finally(() => setLoading(false))
-    serum()
-  })
+  }, [])
   const market = useSelector(state => state.markets.markets.find(market => market.id === parseInt(id)))
   // handlers
   const handleSelect = (option, setter) => {
@@ -42,7 +30,8 @@ const MarketView = () => {
   const options = [{label:'BTC', value: 'BTC'}, {label:'ETH', value: 'ETH'}, {label:'BBT', value: 'BBT'}, {label:'BTF', value: 'BTF'}]
   //renders
   const renderMarket = () => {
-    return (
+    if (!market) history.push('/404')
+    else return (
       <div className="w-full relative max-w-md">
         {/* CONSULTAR */}
         {/* <div className="absolute top-0 -m-4 rounded-xl opacity-30 w-full h-full bg-primary"></div>
@@ -70,7 +59,7 @@ const MarketView = () => {
               <Select id="to" value={to} onChange={(o) => handleSelect(o, setTo)} styles={customStyle} theme={theme} options={options}/>
             </div>
           </div>
-          <button className="my-4 w-full uppercase font-bold text-center bg-gradient-to-r from-primary to-secondary text-opposite rounded-md px-6 py-4 text-md shadow hover:text-default transition-color duration-150 ease-in">Swap <FontAwesomeIcon icon={faRetweet} /></button>
+          <button disabled={!connected} className="my-4 w-full uppercase font-bold text-center bg-gradient-to-r from-primary to-secondary text-opposite rounded-md px-6 py-4 text-md shadow hover:text-default hover:disabled:text-opposite transition-color duration-150 ease-in disabled:opacity-20 disabled:cursor-not-allowed">Swap <FontAwesomeIcon icon={faRetweet} /></button>
         </div>
       </div>
     )
