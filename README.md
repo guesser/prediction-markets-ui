@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# BETx
+UI interface for swapping tokens on Serum with a Prediction Markets feel to it. Tokens should be first created with the [https://github.com/guesser/BETx](BETx) program as an owner, and then listed on Serum by creating their pair market. 
+The UI doesn't interact just yet with the BETx program, so in order to spin up everything, use the client.js in the program repo. Then you need to create the market on Serum with the market outcomes tokens and its pairs.
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
