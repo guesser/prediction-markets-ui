@@ -9,9 +9,7 @@
 }
 module.exports = {
   theme: {
-    purge: {
-      enabled: false
-    },
+    purge: ['./views/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
     darkMode: 'media',
     extend: {
       opacity: {
