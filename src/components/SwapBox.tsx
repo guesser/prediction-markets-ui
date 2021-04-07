@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { theme, customStyle} from '../theme/select.theme'
 import { useWallet } from '../utils/wallet.utils';
-import { getTransactions, useSerumMarket } from '../utils/transaction.helper'
+import { useSerumMarket } from '../utils/transaction.helper'
 import { Market as MarketType } from '../types/common.type'
 import { PublicKey } from '@solana/web3.js'
 import { ThemeConfig } from 'react-select/src/theme'
@@ -14,6 +14,7 @@ const SwapBox = ({ serumMarkets, market } : { serumMarkets: PublicKey[], market:
   const [from, setFrom] = useState<PublicKey | null>(null)
   const [to, setTo] = useState<PublicKey | null>(null)
   const { connected } = useWallet();
+  const [ amount, setAmount ] = useState<number>(0)
   const [options, setOptions] = useState<any[]>([])
   const [
     first_market,
@@ -21,14 +22,15 @@ const SwapBox = ({ serumMarkets, market } : { serumMarkets: PublicKey[], market:
     first_bids,
     first_bidLiquidity,
     first_askLiquidity,
+    filledOrders
   ] = useSerumMarket(serumMarkets[0])
-    const [
-    second_market,
-    second_asks,
-    second_bids,
-    second_bidLiquidity,
-    second_askLiquidity,
-  ] = useSerumMarket(serumMarkets[1])
+  //   const [
+  //   second_market,
+  //   second_asks,
+  //   second_bids,
+  //   second_bidLiquidity,
+  //   second_askLiquidity,
+  // ] = useSerumMarket(serumMarkets[1])
   
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const SwapBox = ({ serumMarkets, market } : { serumMarkets: PublicKey[], market:
     setter(option)
   }
   const swap = async () => {
-    let tx = await getTransactions(from as PublicKey, to as PublicKey, 20)
+    let tx = filledOrders(amount)
     console.log(tx)
   }
 
@@ -59,7 +61,7 @@ const SwapBox = ({ serumMarkets, market } : { serumMarkets: PublicKey[], market:
         <div className="rounded-2xl border border-depth-2 py-4 px-6 flex justify-between items-end">
           <div>
             <div className="text-depth-1 uppercase text-sm mb-2">swap</div>
-            <input autoComplete="off" placeholder="0.0" className="no-arrows font-mono outline-none text-md bg-depth-1" id="from" type="number"/>
+            <input min="0" onChange={({ target: { value}}) => setAmount(parseFloat(value))} value={amount} autoComplete="off" placeholder="0.0" className="no-arrows font-mono outline-none text-md bg-depth-1" id="from" type="number"/>
           </div>
           <div className="flex-1">
             <Select id="from" value={from} onChange={(o) => handleSelect(o, setFrom)} styles={customStyle} theme={theme as any} options={[options[0]]}/>
@@ -78,7 +80,7 @@ const SwapBox = ({ serumMarkets, market } : { serumMarkets: PublicKey[], market:
           </div>
         </div>
         <div className="p-2 text-sm uppercase text-primary text-right">max liquidity { first_askLiquidity }</div>
-        <button disabled={!connected} onClick={swap} className="my-4 w-full uppercase font-bold text-center bg-gradient-to-r from-primary to-secondary text-opposite rounded-md px-6 py-4 text-md shadow hover:text-default hover:disabled:text-opposite transition-color duration-150 ease-in disabled:opacity-20 disabled:cursor-not-allowed">Swap <FontAwesomeIcon icon={faRetweet} /></button>
+        <button onClick={swap} className="my-4 w-full uppercase font-bold text-center bg-gradient-to-r from-primary to-secondary text-opposite rounded-md px-6 py-4 text-md shadow hover:text-default hover:disabled:text-opposite transition-color duration-150 ease-in disabled:opacity-20 disabled:cursor-not-allowed">Swap <FontAwesomeIcon icon={faRetweet} /></button>
       </div>
     </div>
   )

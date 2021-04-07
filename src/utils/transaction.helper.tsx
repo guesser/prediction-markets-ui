@@ -1,33 +1,17 @@
 import { Market } from "@project-serum/serum";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { Account, Connection, PublicKey } from "@solana/web3.js";
 import { useEffect, useState } from "react";
 import { useConnection } from "./connection.helper";
+import { useWallet } from "./wallet.utils";
 type direction = 'asks' | 'bids'
-const PROGRAM_ID = '9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin'
-export const getTransactions = async (from: PublicKey, to: PublicKey, amount: number) => {
-  let connection = new Connection('https://api.mainnet-beta.solana.com');
-  let marketAddress = new PublicKey('HWHvQhFmJB3NUcu1aihKmrKegfVxBEHzwVX6yZCKEsi1');
-  let programId = new PublicKey('9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin');// Serum program v3
-  let market = await Market.load(connection, marketAddress, {}, programId)
-  let asks = await market.loadAsks(connection);
-  let orderBook = asks.getL2(1000000000)
-  console.log(orderBook.map(([price, size]) => size).reduce((a, b) => a + b, 0))
-  let orders: [number, number, any, any][] = []
-  let i = 0
-  while(i < orderBook.length && amount > 0) {
-    let [price, size] = orderBook[i]
-    orders.push(orderBook[i])
-    amount = amount - size
-    ++i
-  }
-  return orders
-}
-
+// const PROGRAM_ID = '9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin'
+const PROGRAM_ID = 'DESVgJVGajEgKGXhb6XmqDHGz3VjdgP7rEVESBgxmroY'
 
 export function useSerumMarket(address: PublicKey) : [
-  Market | null, [number, number, any, any][], [number, number, any, any][], number, number
+  Market | null, [number, number, any, any][], [number, number, any, any][], number, number, Function
 ] {
   const connection = useConnection()
+  const { connected, wallet, select, connect, disconnect } = useWallet();
   const [market, setMarket] = useState<Market | null>(null)
   const [asks, setAsks] = useState<[number, number, any, any][]>([])
   const [bids, setBids] = useState<[number, number, any, any][]>([])
@@ -45,9 +29,33 @@ export function useSerumMarket(address: PublicKey) : [
 
   const totalLiquidity = async (direction: direction) => {
     debugger
-    let orders = direction === 'asks' ? (await asks || []) : (await bids || [])
+    let orders = direction === 'asks' ? (await getAsks() || []) : (await getBids() || [])
     return orders?.map(([price, size]) => size).reduce((a, b) => a + b, 0)
   }
+
+  const filledOrders = (amount: number): [number, number, any, any][] => {
+    let orders: [number, number, any, any][] = []
+    let i = 0
+    while(i < asks.length && amount > 0) {
+      let [price, size] = asks[i]
+      orders.push(asks[i])
+      amount = amount - size
+      ++i
+    }
+    return orders
+  }
+
+  const placeTrade = async (amount: number) => {
+    // await market?.placeOrder(connection, {
+    //   owner: new Account(wallet?.),
+    //   payer: new PublicKey(),
+    //   side: 'buy', // 'buy' or 'sell'
+    //   price: 123.45,
+    //   size: 17.0,
+    //   orderType: 'limit', // 'limit', 'ioc', 'postOnly'
+    // });
+  }
+
   useEffect(() => {
     const getMarket = async () => {
       let programId = new PublicKey(PROGRAM_ID);// Serum program v3
@@ -70,5 +78,6 @@ export function useSerumMarket(address: PublicKey) : [
       bids,
       bidLiquidity,
       askLiquidity,
+      filledOrders
     ];
 }

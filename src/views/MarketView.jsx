@@ -20,7 +20,7 @@ const MarketView = () => {
   useEffect(() => {
     (async () => {
       await dispatch(fetchMarketById(id))
-      let marketAddress = new PublicKey('HWHvQhFmJB3NUcu1aihKmrKegfVxBEHzwVX6yZCKEsi1');
+      let marketAddress = new PublicKey('6Cpt7EYmzUcHLBQzZuYNqnyKQKieofZXw6bpCWtmwZM1');
       setAddr1(marketAddress)
       setAddr2(marketAddress)
       setLoading(false)

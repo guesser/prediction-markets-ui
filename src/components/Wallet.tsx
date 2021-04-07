@@ -31,12 +31,12 @@ export default function WalletConnect() {
   const renderInfoConnection = () => {
     return <div className="flex items-center">
       { loadingBalance ? <FontAwesomeIcon spin icon={faSpinner} /> : <div className="flex items-center mx-2"><span>{balance}</span><span className="ml-1 text-primary font-bold">SOL</span></div> }
-      <div className="mx-2 uppercase text-secondary font-bold">{endpointInfo?.name}</div>
     </div>
   }
   return (
     <div className="flex items-center">
       { connected && renderInfoConnection()}
+      <div className="mx-2 uppercase text-secondary font-bold">{endpointInfo?.name}</div>
       <button className="px-2 py-1 border border-primary rounded text-primary hover:border-opposite hover:text-default" onClick={connected ? disconnect : connect}>
         {connected ? 'Disconnect' : 'Connect'}
         <FontAwesomeIcon className="ml-2" icon={faPlug} />
