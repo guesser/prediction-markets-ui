@@ -5,7 +5,7 @@ import MarketView from '../views/MarketView'
 import Notifications from 'react-notify-toast';
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
   Route
 } from "react-router-dom"
@@ -14,7 +14,7 @@ import NotFound from "../views/404"
 const Layout = () => {
   return (
     <ThemeProvider initialTheme="light">
-      <Router basename={process.env.PUBLIC_URL}>
+      <Router>
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-1 flex justify-center">
