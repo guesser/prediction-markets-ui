@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/prediction-markets-ui/static/css/main.b225ff2e.chunk.css",
-    "main.js": "/prediction-markets-ui/static/js/main.a906d220.chunk.js",
-    "main.js.map": "/prediction-markets-ui/static/js/main.a906d220.chunk.js.map",
+    "main.js": "/prediction-markets-ui/static/js/main.d140e0d1.chunk.js",
+    "main.js.map": "/prediction-markets-ui/static/js/main.d140e0d1.chunk.js.map",
     "runtime-main.js": "/prediction-markets-ui/static/js/runtime-main.cb4ca940.js",
     "runtime-main.js.map": "/prediction-markets-ui/static/js/runtime-main.cb4ca940.js.map",
     "static/js/2.a2aab84f.chunk.js": "/prediction-markets-ui/static/js/2.a2aab84f.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.cb4ca940.js",
     "static/js/2.a2aab84f.chunk.js",
     "static/css/main.b225ff2e.chunk.css",
-    "static/js/main.a906d220.chunk.js"
+    "static/js/main.d140e0d1.chunk.js"
   ]
 }
