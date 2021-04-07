@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/prediction-markets-ui/static/css/main.e282bfdc.chunk.css",
+    "main.css": "/prediction-markets-ui/static/css/main.6f26f132.chunk.css",
     "main.js": "/prediction-markets-ui/static/js/main.d140e0d1.chunk.js",
     "main.js.map": "/prediction-markets-ui/static/js/main.d140e0d1.chunk.js.map",
     "runtime-main.js": "/prediction-markets-ui/static/js/runtime-main.cb4ca940.js",
@@ -10,13 +10,13 @@
     "static/js/3.7f334411.chunk.js": "/prediction-markets-ui/static/js/3.7f334411.chunk.js",
     "static/js/3.7f334411.chunk.js.map": "/prediction-markets-ui/static/js/3.7f334411.chunk.js.map",
     "index.html": "/prediction-markets-ui/index.html",
-    "static/css/main.e282bfdc.chunk.css.map": "/prediction-markets-ui/static/css/main.e282bfdc.chunk.css.map",
+    "static/css/main.6f26f132.chunk.css.map": "/prediction-markets-ui/static/css/main.6f26f132.chunk.css.map",
     "static/js/2.a2aab84f.chunk.js.LICENSE.txt": "/prediction-markets-ui/static/js/2.a2aab84f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.cb4ca940.js",
     "static/js/2.a2aab84f.chunk.js",
-    "static/css/main.e282bfdc.chunk.css",
+    "static/css/main.6f26f132.chunk.css",
     "static/js/main.d140e0d1.chunk.js"
   ]
 }
