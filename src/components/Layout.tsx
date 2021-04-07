@@ -2,6 +2,8 @@ import { ThemeProvider } from "../themeContext"
 import Navbar from './Navbar'
 import MarketListView from '../views/MarketListView'
 import MarketView from '../views/MarketView'
+import Notifications from 'react-notify-toast';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +28,7 @@ const Layout = () => {
           </main>
         </div>
       </Router>
+      <Notifications />
     </ThemeProvider>
   )
 }

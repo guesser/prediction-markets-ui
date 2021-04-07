@@ -1,23 +1,19 @@
 import { useLocalStorageState } from './utils';
-import { Account, Connection } from '@solana/web3.js';
+import { Account, AccountInfo, Connection, PublicKey } from '@solana/web3.js';
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import { setCache, useAsyncData } from './fetchLoop.helper';
 import tuple from 'immutable-tuple';
+import { ConnectionContextValues, EndpointInfo } from './types';
 
-export const ENDPOINTS = [
-  {
-    name: 'devnet',
-    endpoint: 'devnet.solana.com',
-    custom: false,
-  },
+export const ENDPOINTS: EndpointInfo[] = [
   {
     name: 'mainnet-beta',
     endpoint: 'https://solana-api.projectserum.com',
     custom: false,
   },
   {
-    name: 'testnet',
-    endpoint: 'https://testnet.projectserum.com',
+    name: 'devnet',
+    endpoint: 'https://devnet.solana.com',
     custom: false,
   },
   { name: 'localnet', endpoint: 'http://127.0.0.1:8899', custom: false },
@@ -25,11 +21,16 @@ export const ENDPOINTS = [
 
 const accountListenerCount = new Map();
 
-const ConnectionContext = React.createContext(null);
+const ConnectionContext: React.Context<null | ConnectionContextValues> = React.createContext<null | ConnectionContextValues>(
+  null,
+);
 
 export function ConnectionProvider({ children }) {
-  const [endpoint, setEndpoint] = useLocalStorageState('connectionEndpts',ENDPOINTS[0].endpoint)
-  const [customEndpoints, setCustomEndpoints] = useLocalStorageState('customConnectionEndpoints', []);
+  const [endpoint, setEndpoint] = useLocalStorageState<string>(
+    'connectionEndpts',
+    ENDPOINTS[0].endpoint,
+  );
+  const [customEndpoints, setCustomEndpoints] = useLocalStorageState<EndpointInfo[]>('customConnectionEndpoints', []);
   const availableEndpoints = ENDPOINTS.concat(customEndpoints);
 
   const connection = useMemo(() => new Connection(endpoint, 'recent'), [
@@ -121,10 +122,12 @@ export function useConnectionConfig() {
   };
 }
 
-export function useAccountInfo(publicKey) {
+export function useAccountInfo(
+  publicKey: PublicKey | undefined | null,
+): [AccountInfo<Buffer> | null | undefined, boolean] {
   const connection = useConnection();
   const cacheKey = tuple(connection, publicKey?.toBase58());
-  const [accountInfo, loaded] = useAsyncData(
+  const [accountInfo, loaded] = useAsyncData<AccountInfo<Buffer> | null>(
     async () => (publicKey ? connection.getAccountInfo(publicKey) : null),
     cacheKey,
     { refreshInterval: 60_000 },
@@ -137,7 +140,7 @@ export function useAccountInfo(publicKey) {
       let currentItem = accountListenerCount.get(cacheKey);
       ++currentItem.count;
     } else {
-      let previousInfo = null;
+      let previousInfo: AccountInfo<Buffer> | null = null;
       const subscriptionId = connection.onAccountChange(publicKey, (info) => {
         if (
           !previousInfo ||
@@ -162,7 +165,7 @@ export function useAccountInfo(publicKey) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cacheKey]);
-  const previousInfoRef = useRef(null);
+  const previousInfoRef = useRef<AccountInfo<Buffer> | null | undefined>(null);
   if (
     !accountInfo ||
     !previousInfoRef.current ||

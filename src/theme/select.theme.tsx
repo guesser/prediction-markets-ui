@@ -1,5 +1,4 @@
 const _getRGBColor = color => `rgb(${color})`
-
 export const theme = {
   colors: {
     primary: _getRGBColor('var(--color-primary)'),

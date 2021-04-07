@@ -96,6 +96,7 @@ export function WalletProvider({ children }) {
               : walletPublicKey;
 
           notify({
+            type: 'success',
             message: 'Wallet update',
             description: 'Connected to wallet ' + keyToDisplay,
           });
@@ -105,6 +106,7 @@ export function WalletProvider({ children }) {
       wallet.on('disconnect', () => {
         setConnected(false);
         notify({
+          type: 'success',
           message: 'Wallet update',
           description: 'Disconnected from wallet',
         });

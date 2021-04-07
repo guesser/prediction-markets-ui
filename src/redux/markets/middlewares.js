@@ -18,7 +18,6 @@ export const fetchMarkets = () => async (dispatch, getState) => {
     markets = []
     filters = []
   }
-  console.log(filters)
   dispatch({
     type: ADD_MARKETS_AND_FILTERS,
     payload: {
@@ -32,7 +31,6 @@ export const fetchMarketById = (id) => async (dispatch, getState) => {
   let market
   try {
     let { data } = await _api.get(`/markets/${id}`)
-    console.log(data)
     market = MarketMapper.marketDTOtoMarket(data.market)
   } catch (error) {
     market = null
